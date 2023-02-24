@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <h1>Pokemon!</h1>
+    <section id="seleccion-mascota">
+        <h2 class="subtitulo">elige a tu mascota:</h2>
+        <div id="contenedor-tarjetas" class="tarjetas"></div>
+        <button id="btt-mascota">Seleccionar</button>
+    </section>
+    <section id="seleccion-ataque">
+        <h2 class="subtitulo">elige tu ataque:</h2>
+        <div id="contenedor-ataques" class="btt-ataques"></div>
+        <div>
+            <div id="mensajes">
+                <p id="resultado"></p>
+            </div>
+            <button id="btt-reiniciar">Reiniciar</button>
+        </div>
+        <div class="ataques">
+            <div class="ataque-jugador">
+                <p id="victorias-jugador">0</p>
+                <p id="mascota-jugador"></p>
+                <div id="atake-del-jugador"></div>
+            </div>
+            <div class="ataque-enemigo">
+                <p id="victorias-enemigo">0</p>
+                <p id="mascota-enemigo"></p>
+                <div id="atake-del-enemigo"></div>
+            </div>
+        </div>
+    </section>
+    <script src="../JS/general.js"></script>
+</body>
+
+</html>
