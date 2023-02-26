@@ -21,6 +21,7 @@ const contenedorAtaques = document.getElementById("contenedor-ataques");
 const sectionVerMapa = document.getElementById("ver-mapa");
 const canvasMapa = document.getElementById("mapa");
 
+var miMokepon;
 var pokemones = [];
 var botones = [];
 var ataquesJugador = [];
@@ -150,9 +151,6 @@ function seleccionarMascotaJugador() {
     // sectionSeleccionarAtake.style.display = "flex";
 
     sectionVerMapa.style.display = "flex";
-    intervalo = setInterval(pintarCanvas, 50);
-
-    iniciarMapa();
 
     if (inputHipodoge.checked) {
         mascotaJugador = inputHipodoge.id;
@@ -175,6 +173,9 @@ function seleccionarMascotaJugador() {
     } else {
         alert("no seleccionaste");
     }
+
+    intervalo = setInterval(pintarCanvas, 50);
+    iniciarMapa();
 
     extraerAtaques(mascotaJugador);
     seleccionarMascotaEnemigo();
@@ -347,33 +348,34 @@ function crearMensaje() {
 }
 
 function pintarCanvas() {
-    capipepo.x += capipepo.velocidadX;
-    capipepo.y += capipepo.velocidadY;
+
+    miMokepon.x += miMokepon.velocidadX;
+    miMokepon.y += miMokepon.velocidadY;
     lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
     lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
-    lienzo.drawImage(capipepo.mapaFoto, capipepo.x,
-        capipepo.y, capipepo.ancho, capipepo.alto);
+    lienzo.drawImage(miMokepon.mapaFoto, miMokepon.x,
+        miMokepon.y, miMokepon.ancho, miMokepon.alto);
 }
 
 function moverArriba() {
-    capipepo.velocidadY = -5;
+    miMokepon.velocidadY = -5;
 }
 
 function moverIzquierda() {
-    capipepo.velocidadX = -5;
+    miMokepon.velocidadX = -5;
 }
 
 function moverAbajo() {
-    capipepo.velocidadY = 5;
+    miMokepon.velocidadY = 5;
 }
 
 function moverDerecha() {
-    capipepo.velocidadX = 5;
+    miMokepon.velocidadX = 5;
 }
 
 function detenerMover() {
-    capipepo.velocidadX = 0;
-    capipepo.velocidadY = 0;
+    miMokepon.velocidadX = 0;
+    miMokepon.velocidadY = 0;
 }
 
 function sePresionoTecla(event) {
@@ -396,9 +398,18 @@ function sePresionoTecla(event) {
 function iniciarMapa() {
     mapa.width = 320;
     mapa.height = 240;
-
+    miMokepon = obtenerObjMascota(mascotaJugador);
     window.addEventListener("keydown", sePresionoTecla);
     window.addEventListener("keyup", detenerMover);
+}
+
+function obtenerObjMascota(mascota){
+
+    for (let i = 0; i < pokemones.length; i++) {
+        if (mascota === pokemones[i].nombre) {
+            return pokemones[i];
+        }
+    }
 }
 
 window.addEventListener("load", iniciarJuego);
