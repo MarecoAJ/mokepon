@@ -32,6 +32,8 @@ var iAtaqueJugador;
 var iAtaqueEnemigo;
 var lienzo = canvasMapa.getContext("2d");
 var intervalo;
+var mapaBackground = new Image();
+mapaBackground.src = "/assets/mokemap.png"
 
 class pokemon {
     constructor(nombre, foto, tipo) {
@@ -148,7 +150,7 @@ function seleccionarMascotaJugador() {
     // sectionSeleccionarAtake.style.display = "flex";
 
     sectionVerMapa.style.display = "flex";
-    intervalo = setInterval(pintarMascota, 50);
+    intervalo = setInterval(pintarCanvas, 50);
 
     iniciarMapa();
 
@@ -344,10 +346,11 @@ function crearMensaje() {
     divAtakeEnemigo.appendChild(atakeDelEnemigo);
 }
 
-function pintarMascota() {
+function pintarCanvas() {
     capipepo.x += capipepo.velocidadX;
     capipepo.y += capipepo.velocidadY;
     lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
+    lienzo.drawImage(mapaBackground, 0, 0, mapa.width, mapa.height);
     lienzo.drawImage(capipepo.mapaFoto, capipepo.x,
         capipepo.y, capipepo.ancho, capipepo.alto);
 }
@@ -391,6 +394,8 @@ function sePresionoTecla(event) {
 }
 
 function iniciarMapa() {
+    mapa.width = 800;
+    mapa.height = 600;
 
     window.addEventListener("keydown", sePresionoTecla);
     window.addEventListener("keyup", detenerMover);
