@@ -394,8 +394,8 @@ function sePresionoTecla(event) {
 }
 
 function iniciarMapa() {
-    mapa.width = 800;
-    mapa.height = 600;
+    mapa.width = 320;
+    mapa.height = 240;
 
     window.addEventListener("keydown", sePresionoTecla);
     window.addEventListener("keyup", detenerMover);
