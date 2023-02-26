@@ -1,5 +1,5 @@
 var ataqueJugador, ataqueEnemigo, mascotaJugador, mascotaEnemigo, inputHipodoge, inputCapipepo,
-    inputRatigueya, inputPydos, inputTucapalma, inputLangostelvis;  
+    inputRatigueya, inputPydos, inputTucapalma, inputLangostelvis;
 var victoriasEnemigo = 0;
 var victoriasJugador = 0;
 
@@ -18,6 +18,9 @@ const divAtakeEnemigo = document.getElementById("atake-del-enemigo");
 const contenedorTarjetas = document.getElementById("contenedor-tarjetas");
 const contenedorAtaques = document.getElementById("contenedor-ataques");
 
+const sectionVerMapa = document.getElementById("ver-mapa");
+const canvasMapa = document.getElementById("mapa");
+
 var pokemones = [];
 var botones = [];
 var ataquesJugador = [];
@@ -27,6 +30,8 @@ var ataquesPokemonEnemigo;
 var bttFuego, bttAgua, bttTierra;
 var iAtaqueJugador;
 var iAtaqueEnemigo;
+var lienzo = canvasMapa.getContext("2d");
+var intervalo;
 
 class pokemon {
     constructor(nombre, foto, tipo) {
@@ -34,6 +39,14 @@ class pokemon {
         this.foto = foto;
         this.ataques = [];
         this.tipo = tipo;
+        this.x = 20;
+        this.y = 30;
+        this.ancho = 80;
+        this.alto = 80;
+        this.mapaFoto = new Image();
+        this.mapaFoto.src = foto;
+        this.velocidadX = 0;
+        this.velocidadY = 0;
     }
 }
 
@@ -97,6 +110,8 @@ pokemones.push(hipodoge, capipepo, ratigueya, pydos, tucapalma, langostelvis);
 function iniciarJuego() {
 
     sectionSeleccionarAtake.style.display = "none";
+    sectionVerMapa.style.display = "none";
+
     pokemones.forEach((pokemon) => {
         opcionesPokemones = `
        <input type="radio" name="mascota" id=${pokemon.nombre}>
@@ -130,7 +145,12 @@ function aleatorio(min, max) {
 function seleccionarMascotaJugador() {
 
     sectionSeleccionarMascota.style.display = "none";
-    sectionSeleccionarAtake.style.display = "flex";
+    // sectionSeleccionarAtake.style.display = "flex";
+
+    sectionVerMapa.style.display = "flex";
+    intervalo = setInterval(pintarMascota, 50);
+
+    iniciarMapa();
 
     if (inputHipodoge.checked) {
         mascotaJugador = inputHipodoge.id;
@@ -262,7 +282,7 @@ function combate() {
 
             if (ataquesJugador[i] === tipoMascotaJugador) {
                 victoriasJugador++;
-               
+
             } else if (ataquesEnemigo[i] === tipoMascotaEnemigo) {
                 victoriasEnemigo++;
 
@@ -322,6 +342,58 @@ function crearMensaje() {
     atakeDelJugador.innerHTML = iAtaqueJugador;
     divAtakeJugador.appendChild(atakeDelJugador);
     divAtakeEnemigo.appendChild(atakeDelEnemigo);
+}
+
+function pintarMascota() {
+    capipepo.x += capipepo.velocidadX;
+    capipepo.y += capipepo.velocidadY;
+    lienzo.clearRect(0, 0, canvasMapa.width, canvasMapa.height);
+    lienzo.drawImage(capipepo.mapaFoto, capipepo.x,
+        capipepo.y, capipepo.ancho, capipepo.alto);
+}
+
+function moverArriba() {
+    capipepo.velocidadY = -5;
+}
+
+function moverIzquierda() {
+    capipepo.velocidadX = -5;
+}
+
+function moverAbajo() {
+    capipepo.velocidadY = 5;
+}
+
+function moverDerecha() {
+    capipepo.velocidadX = 5;
+}
+
+function detenerMover() {
+    capipepo.velocidadX = 0;
+    capipepo.velocidadY = 0;
+}
+
+function sePresionoTecla(event) {
+    switch (event.key) {
+        case "ArrowUp":
+            moverArriba();
+            break;
+        case "ArrowDown":
+            moverAbajo();
+            break;
+        case "ArrowLeft":
+            moverIzquierda();
+            break;
+        case "ArrowRight":
+            moverDerecha();
+            break;
+    }
+}
+
+function iniciarMapa() {
+
+    window.addEventListener("keydown", sePresionoTecla);
+    window.addEventListener("keyup", detenerMover);
 }
 
 window.addEventListener("load", iniciarJuego);

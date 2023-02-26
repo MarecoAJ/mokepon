@@ -15,6 +15,14 @@
         <div id="contenedor-tarjetas" class="tarjetas"></div>
         <button id="btt-mascota">Seleccionar</button>
     </section>
+    <section id="ver-mapa">
+        <h2 class="subtitulo">recorre el mapa</h2>
+        <canvas id="mapa"></canvas>
+        <button onmouseup="detenerMover()" onmousedown="moverArriba()">arriba</button onmouseup="detenerMover()">
+        <button onmouseup="detenerMover()" onmousedown="moverIzquierda()">izquierda</button onmouseup="detenerMover()">
+        <button onmouseup="detenerMover()" onmousedown="moverAbajo()">abajo</button onmouseup="detenerMover()">
+        <button onmouseup="detenerMover()" onmousedown="moverDerecha()">derecha</button>
+    </section>
     <section id="seleccion-ataque">
         <h2 class="subtitulo">elige tu ataque:</h2>
         <div id="contenedor-ataques" class="btt-ataques"></div>
