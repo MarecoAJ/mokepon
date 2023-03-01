@@ -1,4 +1,4 @@
-var ataqueJugador, ataqueEnemigo, mascotaJugador, mascotaEnemigo, inputHipodoge, inputCapipepo,
+var altoMapa, anchoMapa, ataqueJugador, ataqueEnemigo, mascotaJugador, mascotaEnemigo, inputHipodoge, inputCapipepo,
     inputRatigueya, inputPydos, inputTucapalma, inputLangostelvis;
 var victoriasEnemigo = 0;
 var victoriasJugador = 0;
@@ -34,18 +34,30 @@ var iAtaqueEnemigo;
 var lienzo = canvasMapa.getContext("2d");
 var intervalo;
 var mapaBackground = new Image();
-mapaBackground.src = "/assets/mokemap.png"
+mapaBackground.src = "/assets/mokemap.png";
+anchoMapa = window.innerWidth - 20;
+const anchoMaxMapa = 350;
+
+if(anchoMapa > anchoMaxMapa){
+    anchoMapa = anchoMaxMapa -20;
+}
+
+
+altoMapa = anchoMapa * 600 / 800;
+
+mapa.width = anchoMapa;
+mapa.height = altoMapa;
 
 class pokemon {
-    constructor(nombre, foto, tipo, fotoMapa = foto, x = 10, y = 10) {
+    constructor(nombre, foto, tipo, fotoMapa = foto) {
         this.nombre = nombre;
         this.foto = foto;
         this.ataques = [];
         this.tipo = tipo;
-        this.x = x;
-        this.y =y;
         this.ancho = 40;
         this.alto = 40;
+        this.x = aleatorio(0, mapa.width - this.ancho);
+        this.y =aleatorio(0, mapa.height - this.alto);
         this.mapaFoto = new Image();
         this.mapaFoto.src = fotoMapa;
         this.velocidadX = 0;
@@ -65,9 +77,9 @@ var pydos = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "ag
 var tucapalma = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
 var langostelvis = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
-var hipodogeEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png", 80, 120);
-var capipepoEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png", 200, 190);
-var ratigueyaEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png",150, 150 );
+var hipodogeEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png" );
+var capipepoEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+var ratigueyaEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png" );
 var pydosEnemigo = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
 var tucapalmaEnemigo = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
 var langostelvisEnemigo = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
@@ -469,8 +481,6 @@ function sePresionoTecla(event) {
 }
 
 function iniciarMapa() {
-    mapa.width = 320;
-    mapa.height = 240;
     miMokepon = obtenerObjMascota(mascotaJugador);
     
     intervalo = setInterval(pintarCanvas, 50);
