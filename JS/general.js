@@ -37,9 +37,10 @@ var mapaBackground = new Image();
 mapaBackground.src = "/assets/mokemap.png";
 anchoMapa = window.innerWidth - 20;
 const anchoMaxMapa = 350;
+var jugadorId = null;
 
-if(anchoMapa > anchoMaxMapa){
-    anchoMapa = anchoMaxMapa -20;
+if (anchoMapa > anchoMaxMapa) {
+    anchoMapa = anchoMaxMapa - 20;
 }
 
 
@@ -57,16 +58,16 @@ class pokemon {
         this.ancho = 40;
         this.alto = 40;
         this.x = aleatorio(0, mapa.width - this.ancho);
-        this.y =aleatorio(0, mapa.height - this.alto);
+        this.y = aleatorio(0, mapa.height - this.alto);
         this.mapaFoto = new Image();
         this.mapaFoto.src = fotoMapa;
         this.velocidadX = 0;
         this.velocidadY = 0;
     }
 
-    pintarMokepon(){
-    lienzo.drawImage(this.mapaFoto, this.x,
-        this.y, this.ancho, this.alto);
+    pintarMokepon() {
+        lienzo.drawImage(this.mapaFoto, this.x,
+            this.y, this.ancho, this.alto);
     }
 }
 
@@ -77,9 +78,9 @@ var pydos = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "ag
 var tucapalma = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
 var langostelvis = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
-var hipodogeEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png" );
+var hipodogeEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
 var capipepoEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
-var ratigueyaEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png" );
+var ratigueyaEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
 var pydosEnemigo = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
 var tucapalmaEnemigo = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
 var langostelvisEnemigo = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
@@ -207,6 +208,19 @@ function iniciarJuego() {
     bttReiniciar.style.display = "none";
     bbtMascotaJugador.addEventListener("click", seleccionarMascotaJugador);
     bttReiniciar.addEventListener("click", reiniciarJuego);
+
+    unirseAlJuego();
+}
+
+function unirseAlJuego() {
+
+    fetch("http://localhost:8080/unirse").then(function (res) {
+        if (res.ok) {
+            res.text().then(function (respuesta) {
+                jugadorId = respuesta;
+            })
+        }
+    });
 }
 
 function reiniciarJuego() {
@@ -220,8 +234,6 @@ function aleatorio(min, max) {
 function seleccionarMascotaJugador() {
 
     sectionSeleccionarMascota.style.display = "none";
-
-    
 
     if (inputHipodoge.checked) {
         mascotaJugador = inputHipodoge.id;
@@ -245,10 +257,26 @@ function seleccionarMascotaJugador() {
         alert("no seleccionaste");
     }
 
+    seleccionarMokepon(mascotaJugador);
+
     extraerAtaques(mascotaJugador);
     sectionVerMapa.style.display = "flex";
     iniciarMapa();
 
+}
+
+function seleccionarMokepon(mascotaJugador) {
+    fetch(`http://localhost:8080/mokepon${jugadorId}`, {
+        method: "post",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            mokepon: mascotaJugador
+        })
+    });
+
+    unirseAlJuego
 }
 
 function extraerAtaques(mascota) {
@@ -352,13 +380,13 @@ function combate() {
 
         if (ataquesJugador[i] == ataquesEnemigo[i]) {
 
-            if(tipoMascotaEnemigo !== tipoMascotaJugador){
+            if (tipoMascotaEnemigo !== tipoMascotaJugador) {
                 if (ataquesJugador[i] === tipoMascotaJugador) {
                     victoriasJugador++;
 
                 } else if (ataquesEnemigo[i] === tipoMascotaEnemigo) {
                     victoriasEnemigo++;
-                    
+
                 }
             }
             indexAmbosOponentes(i, i);
@@ -367,25 +395,25 @@ function combate() {
             indexAmbosOponentes(i, i);
             crearMensaje();
             victoriasJugador++;
-            
-            
+
+
         } else if (ataquesJugador[i] == "agua" && ataquesEnemigo[i] == "fuego") {
             crearMensaje();
             victoriasJugador++;
-            
-           
+
+
         } else if (ataquesJugador[i] == "tierra" && ataquesEnemigo[i] == "agua") {
             indexAmbosOponentes(i, i);
             crearMensaje();
             victoriasJugador++;
-            
-           
+
+
         } else {
             indexAmbosOponentes(i, i);
             crearMensaje();
             victoriasEnemigo++;
-            
-            
+
+
         }
     }
 
@@ -435,7 +463,7 @@ function pintarCanvas() {
     capipepoEnemigo.pintarMokepon();
     ratigueyaEnemigo.pintarMokepon();
 
-    if(miMokepon.velocidadX !== 0 || miMokepon.velocidadY !== 0 ){
+    if (miMokepon.velocidadX !== 0 || miMokepon.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo);
         revisarColision(capipepoEnemigo);
         revisarColision(ratigueyaEnemigo);
@@ -482,14 +510,14 @@ function sePresionoTecla(event) {
 
 function iniciarMapa() {
     miMokepon = obtenerObjMascota(mascotaJugador);
-    
+
     intervalo = setInterval(pintarCanvas, 50);
 
     window.addEventListener("keydown", sePresionoTecla);
     window.addEventListener("keyup", detenerMover);
 }
 
-function obtenerObjMascota(mascota){
+function obtenerObjMascota(mascota) {
 
     for (let i = 0; i < pokemones.length; i++) {
         if (mascota === pokemones[i].nombre) {
@@ -498,7 +526,7 @@ function obtenerObjMascota(mascota){
     }
 }
 
-function revisarColision(enemigo){
+function revisarColision(enemigo) {
     const arribaEnemigo = enemigo.y;
     const abajoEnemigo = enemigo.y + enemigo.alto;
     const derechaEnemigo = enemigo.x + enemigo.ancho;
@@ -509,7 +537,7 @@ function revisarColision(enemigo){
     const derechaMascota = miMokepon.x + miMokepon.ancho;
     const izquierdaMascota = miMokepon.x;
 
-    if(abajoMascota < arribaEnemigo || arribaMascota > abajoEnemigo || derechaMascota < izquierdaEnemigo || izquierdaMascota > derechaEnemigo){
+    if (abajoMascota < arribaEnemigo || arribaMascota > abajoEnemigo || derechaMascota < izquierdaEnemigo || izquierdaMascota > derechaEnemigo) {
         return;
     }
     detenerMover();
