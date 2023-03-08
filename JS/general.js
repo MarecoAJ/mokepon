@@ -49,7 +49,7 @@ altoMapa = anchoMapa * 600 / 800;
 mapa.width = anchoMapa;
 mapa.height = altoMapa;
 
-class pokemon {
+class Mokepon {
     constructor(nombre, foto, tipo, fotoMapa = foto, id = null) {
         this.id = id;
         this.nombre = nombre;
@@ -72,12 +72,12 @@ class pokemon {
     }
 }
 
-var hipodoge = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
-var capipepo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
-var ratigueya = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
-var pydos = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
-var tucapalma = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
-var langostelvis = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
+var hipodoge = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
+var capipepo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+var ratigueya = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
+var pydos = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
+var tucapalma = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
+var langostelvis = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
 
 const hipodogeAtaque = [
@@ -228,7 +228,7 @@ function seleccionarMokepon(mascotaJugador) {
     fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
         method: "post",
         headers: {
-            "Content-type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             mokepon: mascotaJugador
@@ -420,9 +420,9 @@ function pintarCanvas() {
 
     enviarPosicion(miMokepon.x, miMokepon.y);
 
-    /*    hipodogeEnemigo.pintarMokepon();
-        capipepoEnemigo.pintarMokepon();
-        ratigueyaEnemigo.pintarMokepon();*/
+    hipodogeEnemigo.pintarMokepon();
+    capipepoEnemigo.pintarMokepon();
+    ratigueyaEnemigo.pintarMokepon();
 
     if (miMokepon.velocidadX !== 0 || miMokepon.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo);
@@ -435,7 +435,7 @@ function enviarPosicion(x, y) {
     fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
         method: "post",
         headers: {
-            "Content-type": "application/json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             x,
@@ -447,25 +447,25 @@ function enviarPosicion(x, y) {
                 enemigos.forEach(function (enemigo) {
 
                     let mokeponEnemigo = null;
-                    const mokeponNombre = enemigo.pokemon.nombre || "";
+                    const mokeponNombre = enemigo.Mokepon.nombre || "";
                     switch (mokeponNombre) {
                         case "hipodoge":
-                            mokeponEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
+                            mokeponEnemigo = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
                             break;
                         case "capipepo":
-                            mokeponEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+                            mokeponEnemigo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
                             break;
                         case "ratigueya":
-                            mokeponEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
+                            mokeponEnemigo = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
                             break;
                         case "pydos":
-                            mokeponEnemigo = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
+                            mokeponEnemigo = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
                             break;
                         case "tucapalma":
-                            mokeponEnemigo = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
+                            mokeponEnemigo = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
                             break;
                         case "langostelvis":
-                            mokeponEnemigo = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
+                            mokeponEnemigo = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
                             break;
                     }
 
