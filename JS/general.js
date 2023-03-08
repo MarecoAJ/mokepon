@@ -419,16 +419,6 @@ function pintarCanvas() {
     miMokepon.pintarMokepon();
 
     enviarPosicion(miMokepon.x, miMokepon.y);
-
-    hipodogeEnemigo.pintarMokepon();
-    capipepoEnemigo.pintarMokepon();
-    ratigueyaEnemigo.pintarMokepon();
-
-    if (miMokepon.velocidadX !== 0 || miMokepon.velocidadY !== 0) {
-        revisarColision(hipodogeEnemigo);
-        revisarColision(capipepoEnemigo);
-        revisarColision(ratigueyaEnemigo);
-    }
 }
 
 function enviarPosicion(x, y) {
