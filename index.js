@@ -82,6 +82,14 @@ APP.post("/mokepon/:jugadorId/ataques", (req, res) => {
     res.end();
 });
 
+APP.get("/mokepon/:jugadorId/ataques", (req, res)=>{
+    const JUGADOR_ID = req.params.jugadorId || "";
+    const JUGADOR = JUGADORES.find((JUGADOR)=> JUGADOR_ID === jugadorId);
+    res.send({
+        ataques: JUGADOR.ataques || []
+    });
+});
+
 APP.listen(8080, () => {
     console.log("servidor iniciado");
 });

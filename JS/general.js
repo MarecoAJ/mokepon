@@ -194,8 +194,6 @@ function aleatorio(min, max) {
 
 function seleccionarMascotaJugador() {
 
-    sectionSeleccionarMascota.style.display = "none";
-
     if (inputHipodoge.checked) {
         mascotaJugador = inputHipodoge.id;
         pMascotaJugador.innerHTML = mascotaJugador;
@@ -216,7 +214,10 @@ function seleccionarMascotaJugador() {
         pMascotaJugador.innerHTML = mascotaJugador;
     } else {
         alert("no seleccionaste");
+        return;
     }
+
+    sectionSeleccionarMascota.style.display = "none";
 
     seleccionarMokepon(mascotaJugador);
 
@@ -299,6 +300,21 @@ function enviarAtaques() {
                ataques: ataqueJugador 
             })
         });
+
+        intervalo = setInterval(obtenerAtaques, 50);
+}
+
+function obtenerAtaques(){
+    fetch(`http://localhost:8080/mokepon/${enemigoId}/ataques`).then(function (res){
+        if(res.ok){
+              res.json().then (function ({ataques}){
+                if(ataques.length === 5){
+                    ataqueEnemigo = ataques;
+                    combate();
+                }
+              });
+        }
+    });
 }
 
 function seleccionarMascotaEnemigo(enemigo) {
@@ -341,6 +357,8 @@ function indexAmbosOponentes(jugador, enemigo) {
 }
 
 function combate() {
+
+    clearInterval(intervalo);
     let tipoMascotaJugador, tipoMascotaEnemigo;
 
     for (let x = 0; x < pokemones.length; x++) {
