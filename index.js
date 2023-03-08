@@ -1,10 +1,10 @@
-const express = require("express");
-const app = express();
-const jugadores = [];
-const cors = require("cors");
+const EXPRESS = require("express");
+const APP = EXPRESS();
+const JUGADORES = [];
+const CORS = require("cors");
 
-app.use(cors());
-app.use(express.json());
+APP.use(CORS());
+APP.use(EXPRESS.json());
 
 class Jugador {
     constructor(id) {
@@ -27,39 +27,48 @@ class Mokepon {
     }
 }
 
-app.post("/mokepon/:jugadorId", (req, res) => {
-    const jugadorId = req.params.jugadorId || "";
-    const nombre = req.body.mokepon || "";
-    const mokepon = new mokepon(nombre);
-    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id);
-    if (jugadorIndex >= 0) {
-        jugadores[jugadorIndex].asignarMokepon(mokepon);
+APP.get("/unirse", (req, res) => {
+    const ID = `${Math.random()}`;
+    const JUGADOR = new Jugador(ID);
+    JUGADORES.push(JUGADOR);
+
+    res.setHeader("Acess-Control-Allow-Origin", "*");
+    res.send(ID);
+});
+
+APP.post("/mokepon/:jugadorId", (req, res) => {
+    const JUGADOR_ID = req.params.jugadorId || "";
+    const NOMBRE_MOKEPON = req.body.mokepon || "";
+    const MOKEPON = new MOKEPON(NOMBRE_MOKEPON);
+    const JUGADOR_INDEX = JUGADORES.findIndex((jugador) => JUGADOR_ID === jugador.id);
+
+    if (JUGADOR_INDEX >= 0) {
+        JUGADORES[JUGADOR_INDEX].asignarMokepon(MOKEPON);
     }
+
     res.end();
 });
 
-app.get("/unirse", (req, res) => {
-    const id = `${Math.random()}`;
-    const jugador = new Jugador(id);
-    jugadores.push(jugador);
-    res.setHeader("Acess-Control-Allow-Origin", "*");
-    res.send(id);
+APP.post("/mokepon/:jugadorId/posicion", (req, res) => {
+    const JUGADOR_ID = req.params.jugadorId || "";
+    const X = req.body.x || 0;
+    const Y = req.body.y || 0;
+    const JUGADOR_INDEX = JUGADORES.findIndex((jugador) => JUGADOR_ID === jugador.id);
+
+    if (JUGADOR_INDEX >= 0) { 
+        
+        JUGADORES[JUGADOR_INDEX].actualizarPosicionMapa(X, Y);
+    }
+
+    const ENEMIGOS = JUGADORES.filter((jugador) => JUGADOR_ID !== jugador.id);
+
+    res.send({ enemigos: ENEMIGOS });
 });
 
-app.listen(8080, () => {
+APP.listen(8080, () => {
     console.log("servidor iniciado");
 });
 
-app.post("/mokepon/:jugadorID/posicion", (req, res) => {
-    const jugadorId = req.params.jugadorId || "";
-    const x = req.body.x || 0;
-    const y = req.body.y || 0;
-    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id);
-    if (jugadorIndex >= 0) {
-        jugadores[jugadorIndex].actualizarPosicionMapa(x, y);
-    }
 
-    res.end();
-});
 
 

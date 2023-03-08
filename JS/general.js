@@ -50,7 +50,8 @@ mapa.width = anchoMapa;
 mapa.height = altoMapa;
 
 class pokemon {
-    constructor(nombre, foto, tipo, fotoMapa = foto) {
+    constructor(nombre, foto, tipo, fotoMapa = foto, id = null) {
+        this.id = id;
         this.nombre = nombre;
         this.foto = foto;
         this.ataques = [];
@@ -78,108 +79,66 @@ var pydos = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "ag
 var tucapalma = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
 var langostelvis = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
-var hipodogeEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
-var capipepoEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
-var ratigueyaEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
-var pydosEnemigo = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
-var tucapalmaEnemigo = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
-var langostelvisEnemigo = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
-hipodoge.ataques.push(
+const hipodogeAtaque = [
     { nombre: "agua", id: "btt-agua" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-capipepo.ataques.push(
+const capipepoAtaque = [
     { nombre: "tierra", id: "btt-tierra" },
     { nombre: "tierra", id: "btt-tierra" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-ratigueya.ataques.push(
+const ratigueyaAtaque = [
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-pydos.ataques.push(
+const pydosAtaque = [
     { nombre: "agua", id: "btt-agua" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-tucapalma.ataques.push(
+const tucapalmaAtaque = [
     { nombre: "tierra", id: "btt-tierra" },
     { nombre: "tierra", id: "btt-tierra" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-langostelvis.ataques.push(
+const langostelvisAtaque = [
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "fuego", id: "btt-fuego" },
     { nombre: "agua", id: "btt-agua" },
     { nombre: "tierra", id: "btt-tierra" }
-);
+];
 
-hipodogeEnemigo.ataques.push(
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+hipodoge.ataques.push(...hipodogeAtaque);
 
-capipepoEnemigo.ataques.push(
-    { nombre: "tierra", id: "btt-tierra" },
-    { nombre: "tierra", id: "btt-tierra" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+capipepo.ataques.push(...capipepoAtaque);
 
-ratigueyaEnemigo.ataques.push(
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+ratigueya.ataques.push(...ratigueyaAtaque);
 
-pydosEnemigo.ataques.push(
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+pydos.ataques.push(...pydosAtaque);
 
-tucapalmaEnemigo.ataques.push(
-    { nombre: "tierra", id: "btt-tierra" },
-    { nombre: "tierra", id: "btt-tierra" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+tucapalma.ataques.push(...tucapalmaAtaque);
 
-langostelvisEnemigo.ataques.push(
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "fuego", id: "btt-fuego" },
-    { nombre: "agua", id: "btt-agua" },
-    { nombre: "tierra", id: "btt-tierra" }
-);
+langostelvis.ataques.push(...langostelvisAtaque);
 
 pokemones.push(hipodoge, capipepo, ratigueya, pydos, tucapalma, langostelvis);
 
@@ -461,9 +420,9 @@ function pintarCanvas() {
 
     enviarPosicion(miMokepon.x, miMokepon.y);
 
-    hipodogeEnemigo.pintarMokepon();
-    capipepoEnemigo.pintarMokepon();
-    ratigueyaEnemigo.pintarMokepon();
+    /*    hipodogeEnemigo.pintarMokepon();
+        capipepoEnemigo.pintarMokepon();
+        ratigueyaEnemigo.pintarMokepon();*/
 
     if (miMokepon.velocidadX !== 0 || miMokepon.velocidadY !== 0) {
         revisarColision(hipodogeEnemigo);
@@ -482,6 +441,42 @@ function enviarPosicion(x, y) {
             x,
             y
         })
+    }).then(function (res) {
+        if (res.ok) {
+            res.json().then(function ({ enemigos }) {
+                enemigos.forEach(function (enemigo) {
+
+                    let mokeponEnemigo = null;
+                    const mokeponNombre = enemigo.pokemon.nombre || "";
+                    switch (mokeponNombre) {
+                        case "hipodoge":
+                            mokeponEnemigo = new pokemon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
+                            break;
+                        case "capipepo":
+                            mokeponEnemigo = new pokemon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+                            break;
+                        case "ratigueya":
+                            mokeponEnemigo = new pokemon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
+                            break;
+                        case "pydos":
+                            mokeponEnemigo = new pokemon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
+                            break;
+                        case "tucapalma":
+                            mokeponEnemigo = new pokemon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
+                            break;
+                        case "langostelvis":
+                            mokeponEnemigo = new pokemon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
+                            break;
+                    }
+
+                    mokeponEnemigo.x = enemigo.x;
+                    mokeponEnemigo.y = enemigo.y;
+                    mokeponEnemigo.pintarMokepon();
+
+                });
+
+            });
+        }
     });
 }
 
