@@ -23,6 +23,7 @@ const canvasMapa = document.getElementById("mapa");
 
 var miMokepon;
 var pokemones = [];
+var mokeponesEnemigos = [];
 var botones = [];
 var ataquesJugador = [];
 var ataquesEnemigo = [];
@@ -419,6 +420,11 @@ function pintarCanvas() {
     miMokepon.pintarMokepon();
 
     enviarPosicion(miMokepon.x, miMokepon.y);
+
+    mokeponesEnemigos.forEach(function (mokepon){
+        mokepon.pintarMokepon();
+    });
+
 }
 
 function enviarPosicion(x, y) {
@@ -434,7 +440,7 @@ function enviarPosicion(x, y) {
     }).then(function (res) {
         if (res.ok) {
             res.json().then(function ({ enemigos }) {
-                enemigos.forEach(function (enemigo) {
+                mokeponesEnemigos = enemigos.map(function (enemigo) {
 
                     let mokeponEnemigo = null;
                     const mokeponNombre = enemigo.Mokepon.nombre || "";
@@ -461,7 +467,8 @@ function enviarPosicion(x, y) {
 
                     mokeponEnemigo.x = enemigo.x;
                     mokeponEnemigo.y = enemigo.y;
-                    mokeponEnemigo.pintarMokepon();
+
+                   return mokeponEnemigo;
 
                 });
 
