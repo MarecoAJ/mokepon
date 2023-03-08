@@ -19,6 +19,10 @@ class Jugador {
         this.x = x;
         this.y = y;
     }
+
+    asignarAtaques(ataques){
+        this.ataques = ataques;
+    }
 }
 
 class Mokepon {
@@ -63,6 +67,19 @@ APP.post("/mokepon/:jugadorId/posicion", (req, res) => {
     const ENEMIGOS = JUGADORES.filter((jugador) => JUGADOR_ID !== jugador.id);
 
     res.send({ enemigos: ENEMIGOS });
+});
+
+APP.post("/mokepon/:jugadorId/ataques", (req, res) => {
+    const JUGADOR_ID = req.params.jugadorId || "";
+    const ATAQUES_MOKEPON = req.body.ataques || [];
+
+    const JUGADOR_INDEX = JUGADORES.findIndex((jugador) => JUGADOR_ID === jugador.id);
+
+    if (JUGADOR_INDEX >= 0) {
+        JUGADORES[JUGADOR_INDEX].asignarAtaques(ATAQUES_MOKEPON);
+    }
+
+    res.end();
 });
 
 APP.listen(8080, () => {

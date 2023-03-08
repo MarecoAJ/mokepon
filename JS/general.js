@@ -39,6 +39,7 @@ mapaBackground.src = "/assets/mokemap.png";
 anchoMapa = window.innerWidth - 20;
 const anchoMaxMapa = 350;
 var jugadorId = null;
+var enemigoId = null;
 
 if (anchoMapa > anchoMaxMapa) {
     anchoMapa = anchoMaxMapa - 20;
@@ -279,9 +280,25 @@ function secuenciaAtaque() {
                 boton.style.background = "#A568BD";
                 boton.disabled = true;
             }
-            ataqueAleatorioEnemigo();
+            if (ataqueJugador.length === 5) {
+                enviarAtaques();
+            }
+
         });
     });
+}
+
+function enviarAtaques() {
+    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`,
+        {
+            method: "post",
+            headers: {
+                "Context-Type": "application/json"
+            },
+            body: JSAON.stringify({
+               ataques: ataqueJugador 
+            })
+        });
 }
 
 function seleccionarMascotaEnemigo(enemigo) {
@@ -421,8 +438,9 @@ function pintarCanvas() {
 
     enviarPosicion(miMokepon.x, miMokepon.y);
 
-    mokeponesEnemigos.forEach(function (mokepon){
+    mokeponesEnemigos.forEach(function (mokepon) {
         mokepon.pintarMokepon();
+        revisarColision(mokepon);
     });
 
 }
@@ -446,29 +464,29 @@ function enviarPosicion(x, y) {
                     const mokeponNombre = enemigo.Mokepon.nombre || "";
                     switch (mokeponNombre) {
                         case "hipodoge":
-                            mokeponEnemigo = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
+                            mokeponEnemigo = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png", enemigo.id);
                             break;
                         case "capipepo":
-                            mokeponEnemigo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+                            mokeponEnemigo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png", enemigo.id);
                             break;
                         case "ratigueya":
-                            mokeponEnemigo = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
+                            mokeponEnemigo = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png", enemigo.id);
                             break;
                         case "pydos":
-                            mokeponEnemigo = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
+                            mokeponEnemigo = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua", enemigo.id);
                             break;
                         case "tucapalma":
-                            mokeponEnemigo = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
+                            mokeponEnemigo = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra", enemigo.id);
                             break;
                         case "langostelvis":
-                            mokeponEnemigo = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
+                            mokeponEnemigo = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego", enemigo.id);
                             break;
                     }
 
                     mokeponEnemigo.x = enemigo.x;
                     mokeponEnemigo.y = enemigo.y;
 
-                   return mokeponEnemigo;
+                    return mokeponEnemigo;
 
                 });
 
@@ -548,6 +566,7 @@ function revisarColision(enemigo) {
         return;
     }
     detenerMover();
+    enemigoId = enemigo.id;
     clearInterval(intervalo);
     sectionSeleccionarAtake.style.display = "flex";
     sectionVerMapa.style.display = "none";
