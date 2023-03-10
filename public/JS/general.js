@@ -35,7 +35,7 @@ var iAtaqueEnemigo;
 var lienzo = canvasMapa.getContext("2d");
 var intervalo;
 var mapaBackground = new Image();
-mapaBackground.src = "/assets/mokemap.png";
+mapaBackground.src = "./assets/mokemap.png";
 anchoMapa = window.innerWidth - 20;
 const anchoMaxMapa = 350;
 var jugadorId = null;
@@ -74,12 +74,12 @@ class Mokepon {
     }
 }
 
-var hipodoge = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
-var capipepo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
-var ratigueya = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
-var pydos = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua");
-var tucapalma = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
-var langostelvis = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
+var hipodoge = new Mokepon("hipodoge", "./assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png");
+var capipepo = new Mokepon("capipepo", "./assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png");
+var ratigueya = new Mokepon("ratigueya", "./assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png");
+var pydos = new Mokepon("pydos", "./assets/mokepons_mokepon_pydos_attack.png", "agua");
+var tucapalma = new Mokepon("tucapalma", "./assets/mokepons_mokepon_tucapalma_attack.png", "tierra");
+var langostelvis = new Mokepon("langostelvis", "./assets/mokepons_mokepon_langostelvis_attack.png", "fuego");
 
 
 const hipodogeAtaque = [
@@ -175,7 +175,7 @@ function iniciarJuego() {
 
 function unirseAlJuego() {
 
-    fetch("http://localhost:8080/unirse").then(function (res) {
+    fetch("http://192.168.1.5:8080/unirse").then(function (res) {
         if (res.ok) {
             res.text().then(function (respuesta) {
                 jugadorId = respuesta;
@@ -228,7 +228,7 @@ function seleccionarMascotaJugador() {
 }
 
 function seleccionarMokepon(mascotaJugador) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}`, {
+    fetch(`http://192.168.1.5:8080/mokepon/${jugadorId}`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -290,7 +290,7 @@ function secuenciaAtaque() {
 }
 
 function enviarAtaques() {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/ataques`,
+    fetch(`http://192.168.1.5:8080/mokepon/${jugadorId}/ataques`,
         {
             method: "post",
             headers: {
@@ -323,28 +323,6 @@ function seleccionarMascotaEnemigo(enemigo) {
     mascotaEnemigo = enemigo.nombre;
     ataquesPokemonEnemigo = enemigo.ataques;
     secuenciaAtaque();
-}
-
-function ataqueAleatorioEnemigo() {
-
-    switch (aleatorio(0, ataquesPokemonEnemigo.length - 1)) {
-        case 0:
-            ataquesEnemigo.push("fuego");
-            break;
-        case 1:
-            ataquesEnemigo.push("agua");
-            break;
-        case 2:
-            ataquesEnemigo.push("tierra");
-            break;
-        case 3:
-            ataquesEnemigo.push("fuego");
-            break;
-        case 4:
-            ataquesEnemigo.push("agua");
-            break;
-    }
-    iniciarPelea();
 }
 
 function iniciarPelea() {
@@ -464,7 +442,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://localhost:8080/mokepon/${jugadorId}/posicion`, {
+    fetch(`http://192.168.1.5:8080/mokepon/${jugadorId}/posicion`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -482,27 +460,27 @@ function enviarPosicion(x, y) {
                     const mokeponNombre = enemigo.Mokepon.nombre || "";
                     switch (mokeponNombre) {
                         case "hipodoge":
-                            mokeponEnemigo = new Mokepon("hipodoge", "assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png", enemigo.id);
+                            mokeponEnemigo = new Mokepon("hipodoge", "./assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png", enemigo.id);
                             break;
                         case "capipepo":
-                            mokeponEnemigo = new Mokepon("capipepo", "assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png", enemigo.id);
+                            mokeponEnemigo = new Mokepon("capipepo", "./assets/mokepons_mokepon_capipepo_attack.png", "tierra", "assets/capipepo.png", enemigo.id);
                             break;
                         case "ratigueya":
-                            mokeponEnemigo = new Mokepon("ratigueya", "assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png", enemigo.id);
+                            mokeponEnemigo = new Mokepon("ratigueya", "./assets/mokepons_mokepon_ratigueya_attack.png", "fuego", "assets/ratigueya.png", enemigo.id);
                             break;
                         case "pydos":
-                            mokeponEnemigo = new Mokepon("pydos", "assets/mokepons_mokepon_pydos_attack.png", "agua", enemigo.id);
+                            mokeponEnemigo = new Mokepon("pydos", "./assets/mokepons_mokepon_pydos_attack.png", "agua", enemigo.id);
                             break;
                         case "tucapalma":
-                            mokeponEnemigo = new Mokepon("tucapalma", "assets/mokepons_mokepon_tucapalma_attack.png", "tierra", enemigo.id);
+                            mokeponEnemigo = new Mokepon("tucapalma", "./assets/mokepons_mokepon_tucapalma_attack.png", "tierra", enemigo.id);
                             break;
                         case "langostelvis":
-                            mokeponEnemigo = new Mokepon("langostelvis", "assets/mokepons_mokepon_langostelvis_attack.png", "fuego", enemigo.id);
+                            mokeponEnemigo = new Mokepon("langostelvis", "./assets/mokepons_mokepon_langostelvis_attack.png", "fuego", enemigo.id);
                             break;
                     }
 
-                    mokeponEnemigo.x = enemigo.x;
-                    mokeponEnemigo.y = enemigo.y;
+                    mokeponEnemigo.x = enemigo.x  || 0;
+                    mokeponEnemigo.y = enemigo.y || 0;
 
                     return mokeponEnemigo;
 

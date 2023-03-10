@@ -5,6 +5,7 @@ const CORS = require("cors");
 
 APP.use(CORS());
 APP.use(EXPRESS.json());
+APP.use(EXPRESS.static("public"));
 
 class Jugador {
     constructor(id) {
@@ -49,7 +50,7 @@ APP.post("/mokepon/:jugadorId", (req, res) => {
     if (JUGADOR_INDEX >= 0) {
         JUGADORES[JUGADOR_INDEX].asignarMokepon(MOKEPON);
     }
-
+console.log(JUGADOR_ID);
     res.end();
 });
 
@@ -66,7 +67,7 @@ APP.post("/mokepon/:jugadorId/posicion", (req, res) => {
 
     const ENEMIGOS = JUGADORES.filter((jugador) => JUGADOR_ID !== jugador.id);
 
-    res.send({ enemigos: ENEMIGOS });
+    res.send({ ENEMIGOS });
 });
 
 APP.post("/mokepon/:jugadorId/ataques", (req, res) => {

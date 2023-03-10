@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
@@ -18,13 +18,21 @@
     <section id="ver-mapa">
         <h2 class="subtitulo">recorre el mapa</h2>
         <canvas id="mapa"></canvas>
-        <button onmouseup="detenerMover()" onmousedown="moverArriba()">arriba</button onmouseup="detenerMover()">
+        <button ontouchstart = "moverArriba()" onmousedown="moverArriba()"
+                ontouchend = "detenerMover()" onmouseup="detenerMover()" 
+        >arriba</button onmouseup="detenerMover()">
         <div>
-            <button onmouseup="detenerMover()" onmousedown="moverIzquierda()">izquierda</button
+            <button ontouchstart = "moverIzquierda()" onmousedown="moverIzquierda()"
+                    ontouchend = "detenerMover()" onmouseup="detenerMover()"
+            >izquierda</button
                 onmouseup="detenerMover()">
-            <button onmouseup="detenerMover()" onmousedown="moverDerecha()">derecha</button>
+            <button ontouchstart = "moverDerecha()" onmousedown="moverDerecha()"
+                    ontouchend = "detenerMover()" onmouseup="detenerMover()"
+            >derecha</button>
         </div>
-        <button onmouseup="detenerMover()" onmousedown="moverAbajo()">abajo</button onmouseup="detenerMover()">
+        <button ontouchstart = "moverAbajo()" onmousedown="moverAbajo()"
+                ontouchend = "detenerMover()" onmouseup ="detenerMover()"
+        >abajo</button onmouseup="detenerMover()">
     </section>
     <section id="seleccion-ataque">
         <h2 class="subtitulo">elige tu ataque:</h2>
@@ -48,7 +56,7 @@
             </div>
         </div>
     </section>
-    <script src="../JS/general.js"></script>
+    <script src="./JS/general.js"></script>
 </body>
 
 </html>
