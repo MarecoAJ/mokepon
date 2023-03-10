@@ -1,4 +1,4 @@
-var altoMapa, anchoMapa, ataqueJugador, ataqueEnemigo, mascotaJugador, mascotaEnemigo, inputHipodoge, inputCapipepo,
+var altoMapa, anchoMapa, ataqueEnemigo, mascotaJugador, mascotaEnemigo, inputHipodoge, inputCapipepo,
     inputRatigueya, inputPydos, inputTucapalma, inputLangostelvis;
 var victoriasEnemigo = 0;
 var victoriasJugador = 0;
@@ -175,9 +175,9 @@ function iniciarJuego() {
 
 function unirseAlJuego() {
 
-    fetch("http://192.168.1.5:8080/unirse").then(function (res) {
+    fetch("http://192.168.1.5:8080/unirse").then((res) =>{
         if (res.ok) {
-            res.text().then(function (respuesta) {
+            res.text().then((respuesta) =>{
                 jugadorId = respuesta;
             })
         }
@@ -281,7 +281,7 @@ function secuenciaAtaque() {
                 boton.style.background = "#A568BD";
                 boton.disabled = true;
             }
-            if (ataqueJugador.length === 5) {
+            if (ataquesJugador.length === 5) {
                 enviarAtaques();
             }
 
@@ -453,12 +453,13 @@ function enviarPosicion(x, y) {
         })
     }).then(function (res) {
         if (res.ok) {
-            res.json().then(function ({ enemigos }) {
-                mokeponesEnemigos = enemigos.map(function (enemigo) {
+            res.json().then(function ({ ENEMIGOS }) {
+                mokeponesEnemigos = ENEMIGOS.map(function (enemigo) {
 
                     let mokeponEnemigo = null;
-                    const mokeponNombre = enemigo.Mokepon.nombre || "";
+                    let mokeponNombre = enemigo.mokepon.nombre || "";
                     switch (mokeponNombre) {
+                        
                         case "hipodoge":
                             mokeponEnemigo = new Mokepon("hipodoge", "./assets/mokepons_mokepon_hipodoge_attack.png", "agua", "assets/hipodoge.png", enemigo.id);
                             break;
@@ -478,10 +479,9 @@ function enviarPosicion(x, y) {
                             mokeponEnemigo = new Mokepon("langostelvis", "./assets/mokepons_mokepon_langostelvis_attack.png", "fuego", enemigo.id);
                             break;
                     }
-
                     mokeponEnemigo.x = enemigo.x  || 0;
                     mokeponEnemigo.y = enemigo.y || 0;
-
+                   
                     return mokeponEnemigo;
 
                 });

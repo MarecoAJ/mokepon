@@ -44,13 +44,13 @@ APP.get("/unirse", (req, res) => {
 APP.post("/mokepon/:jugadorId", (req, res) => {
     const JUGADOR_ID = req.params.jugadorId || "";
     const NOMBRE_MOKEPON = req.body.mokepon || "";
-    const MOKEPON = new MOKEPON(NOMBRE_MOKEPON);
+    const MOKEPON = new Mokepon(NOMBRE_MOKEPON);
     const JUGADOR_INDEX = JUGADORES.findIndex((jugador) => JUGADOR_ID === jugador.id);
 
     if (JUGADOR_INDEX >= 0) {
         JUGADORES[JUGADOR_INDEX].asignarMokepon(MOKEPON);
     }
-console.log(JUGADOR_ID);
+
     res.end();
 });
 
